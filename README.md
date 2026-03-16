@@ -44,3 +44,108 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+frontend/
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   ├── manifest.json
+│   └── robots.txt
+│
+├── src/
+│   ├── assets/
+│   │   ├── images/
+│   │   └── styles/
+│   │       └── index.css
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Modal.tsx
+│   │   │   ├── Spinner.tsx
+│   │   │   ├── Alert.tsx
+│   │   │   ├── Card.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── Layout.tsx
+│   │   │
+│   │   ├── map/
+│   │   │   ├── MapView.tsx
+│   │   │   ├── MapMarker.tsx
+│   │   │   ├── MapControls.tsx
+│   │   │   ├── PropertyPopup.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── properties/
+│   │   │   ├── PropertyCard.tsx
+│   │   │   ├── PropertyList.tsx
+│   │   │   ├── PropertyDetails.tsx
+│   │   │   ├── PropertyFilters.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── LoginForm.tsx
+│   │   │   ├── ProtectedRoute.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   └── ui/
+│   │       ├── Badge.tsx
+│   │       ├── Tabs.tsx
+│   │       └── index.ts
+│   │
+│   ├── pages/
+│   │   ├── Login.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── PropertyDetail.tsx
+│   │   ├── NotFound.tsx
+│   │   └── index.ts
+│   │
+│   ├── services/
+│   │   ├── api/
+│   │   │   ├── axiosConfig.ts
+│   │   │   ├── authApi.ts
+│   │   │   └── propertyApi.ts
+│   │   ├── auth.service.ts
+│   │   ├── property.service.ts
+│   │   └── token.service.ts
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useProperties.ts
+│   │   ├── useDebounce.ts
+│   │   └── index.ts
+│   │
+│   ├── types/
+│   │   ├── property.ts
+│   │   ├── user.ts
+│   │   ├── api.ts
+│   │   └── index.ts
+│   │
+│   ├── utils/
+│   │   ├── constants.ts
+│   │   ├── formatters.ts
+│   │   ├── validators.ts
+│   │   └── index.ts
+│   │
+│   ├── contexts/
+│   │   └── AuthContext.tsx
+│   │
+│   ├── App.tsx
+│   ├── index.tsx
+│   ├── index.css
+│   └── react-app-env.d.ts
+│
+├── .env
+├── .env.example
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+├── postcss.config.js
+└── README.md
