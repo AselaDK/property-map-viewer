@@ -75,7 +75,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <div className="inline-flex gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-xs font-medium text-slate-500">
           <span>demo</span>
           <span className="text-slate-200">|</span>
-          <span>password123</span>
+          <span>demo123</span>
         </div>
       </div>
     </form>

@@ -3,15 +3,14 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  root: 'frontend',
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'frontend/src'),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true,
   },
   server: {
