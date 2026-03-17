@@ -1,151 +1,42 @@
-# Getting Started with Create React App
+# Property Map Viewer - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The frontend of the Property Map Viewer application, built with **React**, **Vite**, and **Tailwind CSS**.
 
-## Available Scripts
+## 🏗️ Architecture
 
-In the project directory, you can run:
+The frontend follows a service-component pattern:
 
-### `npm start`
+*   **Components:** Modular UI elements categorized into `common`, `layout`, `map`, `properties`, and `auth`.
+*   **Services:** Handle API interaction using Axios with automatic token management.
+*   **Context API:** Manages global state for authentication.
+*   **Custom Hooks:** Encapsulate complex logic like property filtering and map interactions.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🛠️ Local Setup
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Prerequisites
+*   [Node.js (v20+)](https://nodejs.org/)
+*   [npm](https://www.npmjs.com/)
 
-### `npm test`
+### Steps
+1.  Navigate to this directory: `cd property-map-viewer`
+2.  Install dependencies: `npm install`
+3.  Create a `.env` file based on `.env.example`:
+    ```env
+    VITE_API_URL=http://localhost:5038/api
+    ```
+4.  Run the development server: `npm run dev`
+    *   Open `http://localhost:3000` in your browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Key Scripts
+*   `npm run dev`: Starts the Vite development server.
+*   `npm run build`: Builds the application for production.
+*   `npm run preview`: Previews the production build locally.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-
-
-frontend/
-├── public/
-│   ├── index.html
-│   ├── favicon.ico
-│   ├── manifest.json
-│   └── robots.txt
-│
-├── src/
-│   ├── assets/
-│   │   ├── images/
-│   │   └── styles/
-│   │       └── index.css
-│   │
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── Button.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── Modal.tsx
-│   │   │   ├── Spinner.tsx
-│   │   │   ├── Alert.tsx
-│   │   │   ├── Card.tsx
-│   │   │   └── index.ts
-│   │   │
-│   │   ├── layout/
-│   │   │   ├── Header.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   ├── Sidebar.tsx
-│   │   │   └── Layout.tsx
-│   │   │
-│   │   ├── map/
-│   │   │   ├── MapView.tsx
-│   │   │   ├── MapMarker.tsx
-│   │   │   ├── MapControls.tsx
-│   │   │   ├── PropertyPopup.tsx
-│   │   │   └── index.ts
-│   │   │
-│   │   ├── properties/
-│   │   │   ├── PropertyCard.tsx
-│   │   │   ├── PropertyList.tsx
-│   │   │   ├── PropertyDetails.tsx
-│   │   │   ├── PropertyFilters.tsx
-│   │   │   └── index.ts
-│   │   │
-│   │   ├── auth/
-│   │   │   ├── LoginForm.tsx
-│   │   │   ├── ProtectedRoute.tsx
-│   │   │   └── index.ts
-│   │   │
-│   │   └── ui/
-│   │       ├── Badge.tsx
-│   │       ├── Tabs.tsx
-│   │       └── index.ts
-│   │
-│   ├── pages/
-│   │   ├── Login.tsx
-│   │   ├── Dashboard.tsx
-│   │   ├── PropertyDetail.tsx
-│   │   ├── NotFound.tsx
-│   │   └── index.ts
-│   │
-│   ├── services/
-│   │   ├── api/
-│   │   │   ├── axiosConfig.ts
-│   │   │   ├── authApi.ts
-│   │   │   └── propertyApi.ts
-│   │   ├── auth.service.ts
-│   │   ├── property.service.ts
-│   │   └── token.service.ts
-│   │
-│   ├── hooks/
-│   │   ├── useAuth.ts
-│   │   ├── useProperties.ts
-│   │   ├── useDebounce.ts
-│   │   └── index.ts
-│   │
-│   ├── types/
-│   │   ├── property.ts
-│   │   ├── user.ts
-│   │   ├── api.ts
-│   │   └── index.ts
-│   │
-│   ├── utils/
-│   │   ├── constants.ts
-│   │   ├── formatters.ts
-│   │   ├── validators.ts
-│   │   └── index.ts
-│   │
-│   ├── contexts/
-│   │   └── AuthContext.tsx
-│   │
-│   ├── App.tsx
-│   ├── index.tsx
-│   ├── index.css
-│   └── react-app-env.d.ts
-│
-├── .env
-├── .env.example
-├── package.json
-├── tsconfig.json
-├── tailwind.config.js
-├── postcss.config.js
-└── README.md
+## 🗺️ Tech Stack
+*   **React 18**
+*   **Vite** (Build Tool)
+*   **Tailwind CSS** (Styling)
+*   **Leaflet & React-Leaflet** (Interactive Maps)
+*   **Axios** (API Requests)
+*   **React Router** (Navigation)
+*   **React Hot Toast** (Notifications)
