@@ -1,42 +1,74 @@
-# Property Map Viewer - Frontend
+# Property Map Viewer — Frontend
 
-The frontend of the Property Map Viewer application, built with **React**, **Vite**, and **Tailwind CSS**.
+React SPA for the Property Map app: map, property list, search, and auth. Built with **Vite**, **Tailwind CSS**, and **React Router**.
 
-## 🏗️ Architecture
+---
 
-The frontend follows a service-component pattern:
+## Features
 
-*   **Components:** Modular UI elements categorized into `common`, `layout`, `map`, `properties`, and `auth`.
-*   **Services:** Handle API interaction using Axios with automatic token management.
-*   **Context API:** Manages global state for authentication.
-*   **Custom Hooks:** Encapsulate complex logic like property filtering and map interactions.
+- **Interactive map** — Leaflet map with property markers and popups.
+- **Property list & search** — Filters (city, price, type, bedrooms) and nearby search (lat/lng + radius).
+- **Auth** — Login page; protected routes; Axios interceptors for JWT and refresh.
+- **Roles** — Admin flows for create/edit/delete property (when backend supports it).
+- **Responsive UI** — Tailwind-based layout for desktop and mobile.
 
-## 🛠️ Local Setup
+---
+
+## Architecture & design
+
+- **Components** — Reusable UI in `components/` (common, layout, map, properties, auth).
+- **Pages** — Route-level views (e.g. Login, map/dashboard, property detail).
+- **Services** — `api/` (axios instance, auth + property API); `auth.service`, `token.service`.
+- **State** — `AuthContext` for user/session; hooks (e.g. `useAuth`, `useProperties`) for data and side effects.
+- **Config** — `VITE_API_URL` in `.env` for API base URL (no backend/EF knowledge in frontend).
+
+---
+
+## Run locally
 
 ### Prerequisites
-*   [Node.js (v20+)](https://nodejs.org/)
-*   [npm](https://www.npmjs.com/)
+
+- [Node.js 20+](https://nodejs.org/)
+- Backend API running (see root [README](../README.md) or [PropertyMap/README](../PropertyMap/README.md))
 
 ### Steps
-1.  Navigate to this directory: `cd property-map-viewer`
-2.  Install dependencies: `npm install`
-3.  Create a `.env` file based on `.env.example`:
-    ```env
-    VITE_API_URL=http://localhost:5038/api
-    ```
-4.  Run the development server: `npm run dev`
-    *   Open `http://localhost:3000` in your browser.
 
-## 🚀 Key Scripts
-*   `npm run dev`: Starts the Vite development server.
-*   `npm run build`: Builds the application for production.
-*   `npm run preview`: Previews the production build locally.
+1. **Install**
+   ```bash
+   npm install
+   ```
 
-## 🗺️ Tech Stack
-*   **React 18**
-*   **Vite** (Build Tool)
-*   **Tailwind CSS** (Styling)
-*   **Leaflet & React-Leaflet** (Interactive Maps)
-*   **Axios** (API Requests)
-*   **React Router** (Navigation)
-*   **React Hot Toast** (Notifications)
+2. **Environment**  
+   Create `.env` from `.env.example`:
+   ```env
+   VITE_API_URL=http://localhost:5038/api
+   ```
+
+3. **Start dev server**
+   ```bash
+   npm run dev
+   ```
+
+4. Open **http://localhost:3000** (or the port Vite prints).
+
+### Scripts
+
+| Command           | Description                |
+|------------------|----------------------------|
+| `npm run dev`    | Start Vite dev server      |
+| `npm run build`  | Production build → `dist/` |
+| `npm run preview`| Serve production build    |
+
+---
+
+## Tech stack
+
+- **React 18** — UI
+- **Vite** — Build and dev server
+- **Tailwind CSS** — Styling
+- **React Router** — Routing
+- **Leaflet / React-Leaflet** — Map
+- **Axios** — API client (with interceptors)
+- **React Hot Toast** — Notifications
+
+More: [docs/API.md](docs/API.md), [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
