@@ -7,19 +7,23 @@ interface PropertyCardProps {
   property: Property;
   onClick?: (property: Property) => void;
   isSelected?: boolean;
+  isFocused?: boolean;
 }
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({
+export const PropertyCard = React.forwardRef<HTMLDivElement, PropertyCardProps>(({
   property,
   onClick,
   isSelected = false,
-}) => {
+  isFocused = false,
+}, ref) => {
   return (
     <div
+      ref={ref}
       onClick={() => onClick?.(property)}
       className={`
         group relative bg-white transition-all duration-300 cursor-pointer p-3 rounded-[24px]
-        ${isSelected ? 'bg-primary-50/50' : 'hover:bg-slate-50'}
+        ${isFocused ? 'ring-2 ring-primary-500 shadow-lg scale-[1.02] bg-primary-50/30' : 
+          isSelected ? 'bg-primary-50/50' : 'hover:bg-slate-50'}
       `}
     >
       <div className="flex gap-4">

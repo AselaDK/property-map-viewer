@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PropertyCard } from './PropertyCard';
 import { Property } from '../../types/property';
 import { Spinner } from '../common/Spinner';
@@ -6,6 +6,7 @@ import { Spinner } from '../common/Spinner';
 interface PropertyListProps {
   properties: Property[];
   selectedProperty?: Property | null;
+  focusedProperty?: Property | null;
   onSelectProperty: (property: Property) => void;
   isLoading?: boolean;
 }
@@ -13,9 +14,21 @@ interface PropertyListProps {
 export const PropertyList: React.FC<PropertyListProps> = ({
   properties,
   selectedProperty,
+  focusedProperty,
   onSelectProperty,
   isLoading = false,
 }) => {
+  const focusedRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (focusedProperty && focusedRef.current) {
+      focusedRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [focusedProperty]);
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -42,9 +55,11 @@ export const PropertyList: React.FC<PropertyListProps> = ({
       {properties.map((property) => (
         <PropertyCard
           key={property.id}
+          ref={focusedProperty?.id === property.id ? focusedRef : null}
           property={property}
           onClick={onSelectProperty}
           isSelected={selectedProperty?.id === property.id}
+          isFocused={focusedProperty?.id === property.id}
         />
       ))}
     </div>

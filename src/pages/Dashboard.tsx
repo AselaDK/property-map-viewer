@@ -61,6 +61,7 @@ export const Dashboard: React.FC = () => {
             <PropertyList
               properties={filteredProperties}
               selectedProperty={selectedProperty}
+              focusedProperty={focusedProperty}
               onSelectProperty={handleSelectProperty}
               isLoading={isLoading}
             />
