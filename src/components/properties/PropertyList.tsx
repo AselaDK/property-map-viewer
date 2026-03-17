@@ -9,6 +9,13 @@ interface PropertyListProps {
   focusedProperty?: Property | null;
   onSelectProperty: (property: Property) => void;
   isLoading?: boolean;
+  pagination?: {
+    page: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
+    changePage: (page: number) => void;
+  };
 }
 
 export const PropertyList: React.FC<PropertyListProps> = ({
@@ -17,6 +24,7 @@ export const PropertyList: React.FC<PropertyListProps> = ({
   focusedProperty,
   onSelectProperty,
   isLoading = false,
+  pagination,
 }) => {
   const focusedRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +70,34 @@ export const PropertyList: React.FC<PropertyListProps> = ({
           isFocused={focusedProperty?.id === property.id}
         />
       ))}
+
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex items-center justify-between px-2 py-6 border-t border-slate-100 mt-4">
+          <button
+            onClick={() => pagination.changePage(pagination.page - 1)}
+            disabled={pagination.page <= 1 || isLoading}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-100 text-slate-600"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            Prev
+          </button>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+              Page {pagination.page} <span className="mx-1 text-slate-200">/</span> {pagination.totalPages}
+            </span>
+          </div>
+
+          <button
+            onClick={() => pagination.changePage(pagination.page + 1)}
+            disabled={pagination.page >= pagination.totalPages || isLoading}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-100 text-slate-600"
+          >
+            Next
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

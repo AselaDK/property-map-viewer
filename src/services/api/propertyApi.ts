@@ -1,11 +1,11 @@
 import api from './axiosConfig';
 import { Property, PropertyFilter, CreatePropertyDto } from '../../types/property';
-import { ApiResponse } from '../../types/api';
+import { ApiResponse, PaginatedResponse } from '../../types/api';
 
 class PropertyService {
-  async getAllProperties(): Promise<Property[]> {
-    const response = await api.get<ApiResponse<Property[]>>('/properties');
-    return response.data.data || [];
+  async getAllProperties(page: number = 1, size: number = 5): Promise<PaginatedResponse<Property>> {
+    const response = await api.get<ApiResponse<PaginatedResponse<Property>>>(`/properties?pageNumber=${page}&pageSize=${size}`);
+    return response.data.data;
   }
 
   async getPropertyById(id: number): Promise<Property> {
@@ -13,7 +13,7 @@ class PropertyService {
     return response.data.data;
   }
 
-  async searchProperties(filter: PropertyFilter): Promise<Property[]> {
+  async searchProperties(filter: PropertyFilter): Promise<PaginatedResponse<Property>> {
     const params = new URLSearchParams();
     
     Object.entries(filter).forEach(([key, value]) => {
@@ -22,8 +22,8 @@ class PropertyService {
       }
     });
 
-    const response = await api.get<ApiResponse<Property[]>>(`/properties/search?${params}`);
-    return response.data.data || [];
+    const response = await api.get<ApiResponse<PaginatedResponse<Property>>>(`/properties/search?${params}`);
+    return response.data.data;
   }
 
   async getNearbyProperties(lat: number, lng: number, radius: number = 10): Promise<Property[]> {

@@ -85,4 +85,4 @@ export const PropertyCard = React.forwardRef<HTMLDivElement, PropertyCardProps>(
       </Link>
     </div>
   );
-};
+});

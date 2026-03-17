@@ -14,18 +14,27 @@ export const Dashboard: React.FC = () => {
     searchProperties,
     selectProperty,
     refresh,
+    pagination,
   } = useProperties();
   const [showDetails, setShowDetails] = useState(false);
   const [focusedProperty, setFocusedProperty] = useState<any>(null);
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('map');
 
   const handleSelectProperty = (property: any) => {
     selectProperty(property);
     setShowDetails(true);
   };
 
+  const handleClear = () => {
+    refresh();
+    setFocusedProperty(null);
+    selectProperty(null as any);
+  };
+
   const handleViewOnMap = () => {
     setFocusedProperty(selectedProperty);
     setShowDetails(false);
+    setViewMode('map');
   };
 
   if (isLoading && filteredProperties.length === 0) {
@@ -44,17 +53,20 @@ export const Dashboard: React.FC = () => {
     <div className="flex flex-col gap-6 relative h-[calc(100vh-180px)] min-h-[600px]">
       {/* Search Header */}
       <div className="flex-shrink-0">
-        <PropertyFilters onFilter={searchProperties} onClear={refresh} />
+        <PropertyFilters onFilter={searchProperties} onClear={handleClear} />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:flex-row gap-6 overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row gap-6 overflow-hidden relative">
         {/* Sidebar Listings */}
-        <div className="w-full lg:w-[400px] xl:w-[460px] flex flex-col bg-white rounded-[32px] border border-slate-100 shadow-soft overflow-hidden">
+        <div className={`
+          w-full lg:w-[400px] xl:w-[460px] flex flex-col bg-white rounded-[32px] border border-slate-100 shadow-soft overflow-hidden
+          ${viewMode === 'map' ? 'hidden lg:flex' : 'flex'}
+        `}>
           <div className="px-6 py-5 border-b border-slate-50 flex items-center justify-between bg-white/50 backdrop-blur-sm sticky top-0 z-10">
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Available Properties</span>
             <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold tracking-tight">
-              {filteredProperties.length} Results
+              {pagination.totalCount} Results
             </span>
           </div>
           <div className="flex-1 overflow-y-auto custom-scrollbar bg-slate-50/30">
@@ -64,12 +76,16 @@ export const Dashboard: React.FC = () => {
               focusedProperty={focusedProperty}
               onSelectProperty={handleSelectProperty}
               isLoading={isLoading}
+              pagination={pagination}
             />
           </div>
         </div>
 
         {/* Full Map View */}
-        <div className="flex-1 relative z-0 bg-white rounded-[32px] border border-slate-100 shadow-soft overflow-hidden group">
+        <div className={`
+          flex-1 relative z-0 bg-white rounded-[32px] border border-slate-100 shadow-soft overflow-hidden group
+          ${viewMode === 'list' ? 'hidden lg:block' : 'block'}
+        `}>
           <MapView
             properties={filteredProperties}
             selectedProperty={selectedProperty}
@@ -84,6 +100,30 @@ export const Dashboard: React.FC = () => {
               <p className="text-sm font-semibold text-slate-700">Interactive Map</p>
             </div>
           </div>
+        </div>
+
+        {/* Mobile View Toggle */}
+        <div className="lg:hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-[500]">
+          <button
+            onClick={() => setViewMode(viewMode === 'map' ? 'list' : 'map')}
+            className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-full shadow-2xl font-bold text-sm tracking-tight active:scale-95 transition-transform"
+          >
+            {viewMode === 'map' ? (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                Show List
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A2 2 0 013 15.488V5.512a2 2 0 011.553-1.954L9 1m0 19l6-3m-6 3V4m6 13l5.447 2.724A2 2 0 0021 17.788V7.812a2 2 0 00-1.553-1.954L15 4m0 13V4m0 0L9 1" />
+                </svg>
+                Show Map
+              </>
+            )}
+          </button>
         </div>
       </div>
 
