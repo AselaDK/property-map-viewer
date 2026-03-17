@@ -71,11 +71,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </Button>
 
       <div className="pt-4 text-center">
-        <span className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-3">Demo account</span>
-        <div className="inline-flex gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-xs font-medium text-slate-500">
-          <span>demo</span>
-          <span className="text-slate-200">|</span>
-          <span>demo123</span>
+        <span className="text-xs font-bold text-slate-300 uppercase tracking-widest block mb-3">Request Access</span>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-[11px] font-bold text-slate-500">
+          <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          <span>Please contact <span className="text-slate-900">Asela</span> for credentials</span>
         </div>
       </div>
     </form>
