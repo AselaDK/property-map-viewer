@@ -18,68 +18,48 @@ export const useProperties = (initialFilter?: PropertyFilter) => {
   const [currentFilter, setCurrentFilter] = useState<PropertyFilter | undefined>(initialFilter);
 
   useEffect(() => {
-    loadProperties(page, pageSize);
-  }, [page, pageSize]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        let pagedData;
+        if (currentFilter) {
+          pagedData = await propertyService.searchProperties({ ...currentFilter, pageNumber: page, pageSize });
+        } else {
+          pagedData = await propertyService.getAllProperties(page, pageSize);
+        }
+        setProperties(pagedData.items);
+        setFilteredProperties(pagedData.items);
+        setTotalCount(pagedData.totalCount);
+        setTotalPages(pagedData.totalPages);
+      } catch (err) {
+        const message = 'Failed to load properties';
+        setError(message);
+        toast.error(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [page, pageSize, currentFilter]);
 
   const loadProperties = useCallback(async (pageNumber: number = 1, size: number = 5) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const pagedData = await propertyService.getAllProperties(pageNumber, size);
-      setProperties(pagedData.items);
-      setFilteredProperties(pagedData.items);
-      setTotalCount(pagedData.totalCount);
-      setTotalPages(pagedData.totalPages);
-    } catch (err) {
-      const message = 'Failed to load properties';
-      setError(message);
-      toast.error(message);
-    } finally {
-      setIsLoading(false);
-    }
+    // This now just syncs the state, and the useEffect handles the fetch
+    setPage(pageNumber);
+    setPageSize(size);
+    setCurrentFilter(undefined);
   }, []);
 
   const searchProperties = useCallback(async (filter: PropertyFilter) => {
-    setIsLoading(true);
-    setError(null);
     setPage(1); // Reset to first page on new search
     setCurrentFilter(filter);
-    try {
-      const pagedData = await propertyService.searchProperties({ ...filter, pageNumber: 1, pageSize });
-      setFilteredProperties(pagedData.items);
-      setTotalCount(pagedData.totalCount);
-      setTotalPages(pagedData.totalPages);
-    } catch (err) {
-      const message = 'Search failed';
-      setError(message);
-      toast.error(message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pageSize]);
+  }, []);
 
-  const changePage = useCallback(async (newPage: number) => {
+  const changePage = useCallback((newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
-    
     setPage(newPage);
-    setIsLoading(true);
-    setError(null);
-    try {
-      let pagedData;
-      if (currentFilter) {
-        pagedData = await propertyService.searchProperties({ ...currentFilter, pageNumber: newPage, pageSize });
-      } else {
-        pagedData = await propertyService.getAllProperties(newPage, pageSize);
-      }
-      setFilteredProperties(pagedData.items);
-      setTotalCount(pagedData.totalCount);
-      setTotalPages(pagedData.totalPages);
-    } catch (err) {
-      toast.error('Failed to load page');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [currentFilter, pageSize, totalPages]);
+  }, [totalPages]);
 
   const getNearbyProperties = useCallback(async (lat: number, lng: number, radius?: number) => {
     setIsLoading(true);
@@ -111,8 +91,7 @@ export const useProperties = (initialFilter?: PropertyFilter) => {
   const refresh = useCallback(() => {
     setPage(1);
     setCurrentFilter(undefined);
-    loadProperties(1, pageSize);
-  }, [loadProperties, pageSize]);
+  }, []);
 
   return {
     properties,
